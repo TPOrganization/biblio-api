@@ -60,3 +60,14 @@
         
         npm install -g npm-check-updates
         npm-check-updates -u
+
+## Création d'une nouvelle branche
+- Partir de la branche "develop"
+        git checkout develop
+- Faire les modifs puis commit les fichiers
+        git add .
+        git commit -m "feat / fix : [UN TEXTE] [NUMERO TICKET JIRA] => BA-22 par exemple"
+- Avant de push (création de la branche avec le numéro de ticket)
+        git checkout -b BA-22
+        git push origin BA-22
+- Puis à la fin du dev de la feature, faire une pull request de la branche vers develop
