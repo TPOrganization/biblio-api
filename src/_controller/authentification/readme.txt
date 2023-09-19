@@ -1,0 +1,1 @@
+Création dans ce répertoire du module / controller / service authentification + Strategy auth guard (local + jwt)

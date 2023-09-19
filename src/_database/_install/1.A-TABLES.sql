@@ -1,0 +1,4 @@
+CREATE TABLE Utilisateur ( 
+    Id INT NOT NULL AUTO_INCREMENT,
+    PRIMARY KEY(Id)
+);
