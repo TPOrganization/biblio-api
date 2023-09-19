@@ -16,7 +16,7 @@
         DB_PORT=3306
         DB_USER=root
         DB_PASSWORD=mysql
-        DB_DATABASE=digixp_temps_saisie_dev
+        DB_DATABASE=
         DB_SSL=false
         DB_SYNCRHONIZE=false
         DB_LOGGING=true
