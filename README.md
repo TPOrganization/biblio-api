@@ -54,7 +54,7 @@
 
 ## Url health check
 
-        http://localhost:3500/api/health
+        http://localhost:3500/api/health 
 
 ## MAJ Version package
         
