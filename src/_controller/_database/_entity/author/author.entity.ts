@@ -6,6 +6,6 @@ export class Author {
     Id: number
 
     @Column()
-    name : string;
+    name : string
 
 }
