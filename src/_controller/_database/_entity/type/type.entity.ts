@@ -6,6 +6,6 @@ export class Type {
     Id: number
 
     @Column()
-    label : string;
+    label : string
 
 }

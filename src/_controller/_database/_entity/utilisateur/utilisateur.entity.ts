@@ -6,17 +6,17 @@ export class Utilisateur {
     Id: number
 
     @Column()
-    lastName : string;
+    lastName : string
 
     @Column()
-    firstName : string;
+    firstName : string
 
     @Column()
-    email : string;
+    email : string
 
     @Column()
-    password : string;
+    password : string
 
     @Column()
-    avatar : string;
+    avatar : string
 }

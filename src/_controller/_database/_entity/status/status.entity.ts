@@ -6,6 +6,6 @@ export class Status {
     Id: number
 
     @Column()
-    label : string;
+    label : string
 
 }

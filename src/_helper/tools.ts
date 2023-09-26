@@ -1,4 +1,4 @@
-import { writeFileSync, promises, existsSync, mkdirSync } from 'fs'
+import { promises } from 'fs'
 import { join } from 'path'
 import postgres from 'src/_database/postgres'
 import mysql from 'src/_database/mysql'

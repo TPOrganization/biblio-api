@@ -71,3 +71,5 @@
         git checkout -b BA-22
         git push origin BA-22
 - Puis à la fin du dev de la feature, faire une pull request de la branche vers develop
+
+/!\  npm run lint pour vérifier que le code est propre

@@ -6,26 +6,26 @@ export class Book {
     Id: number
 
     @Column()
-    userId : string;
+    userId : string
 
     @Column()
-    statusId : string;
+    statusId : string
 
     @Column()
-    author_id : string;
+    author_id : string
 
     @Column()
-    title : string;
+    title : string
 
     @Column()
-    comment : string;
+    comment : string
 
     @Column()
-    start_date : string;
+    start_date : string
 
     @Column()
-    end_date : string;
+    end_date : string
 
     @Column()
-    cover : string;
+    cover : string
 }
