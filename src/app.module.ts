@@ -12,13 +12,8 @@ import { MailModule } from './_helper/mail/mail.module'
 import { HttpModule } from '@nestjs/axios'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataSource } from 'typeorm'
-import { Utilisateur } from './_controller/_database/_entity/utilisateur/utilisateur.entity'
-import { Book } from './_controller/_database/_entity/book/book.entity'
-import { BookType } from './_controller/_database/_entity/bookType/bookType.entity'
-import { Type } from './_controller/_database/_entity/type/type.entity'
-import { Status } from './_controller/_database/_entity/status/status.entity'
-import { Author } from './_controller/_database/_entity/author/author.entity'
 import { UtilisateurModule } from './_controller/_database/utilisateur/utilisateur.module'
+import { DataBaseConfiguration } from './_config/database.configuration'
 
 @Module({
     imports: [
@@ -29,15 +24,8 @@ import { UtilisateurModule } from './_controller/_database/utilisateur/utilisate
         ScheduleModule.forRoot(),
         HealthModule,
         MediaModule,
-        TypeOrmModule.forRoot({
-            type: 'mysql',
-            host: 'localhost',
-            port: 3306,
-            username: 'root',
-            password: 'root',
-            database: 'test',
-            entities: [Utilisateur, Book, BookType, Type, Status, Author], // book, book_type, type, author, status
-            synchronize: true,
+        TypeOrmModule.forRootAsync({
+            useClass: DataBaseConfiguration
         }),
         UtilisateurModule
     ],
@@ -48,8 +36,8 @@ import { UtilisateurModule } from './_controller/_database/utilisateur/utilisate
         UpgradeSchema
     ],
 })
-export class AppModule { 
-    constructor (private dataSource: DataSource){
+export class AppModule {
+    constructor(private dataSource: DataSource) {
 
     }
 }

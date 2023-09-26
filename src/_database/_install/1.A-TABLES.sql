@@ -41,11 +41,8 @@ CREATE TABLE `status` (
 );
 
 ALTER TABLE `book` ADD FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
-
-ALTER TABLE `author` ADD FOREIGN KEY (`id`) REFERENCES `book` (`author_id`);
-
-ALTER TABLE `status` ADD FOREIGN KEY (`id`) REFERENCES `book` (`status_id`);
+ALTER TABLE `book` ADD FOREIGN KEY (`author_id`) REFERENCES `author` (`id`);
+ALTER TABLE `book` ADD FOREIGN KEY (`status_id`) REFERENCES `status` (`id`);
 
 ALTER TABLE `book_type` ADD FOREIGN KEY (`book_id`) REFERENCES `book` (`id`);
-
 ALTER TABLE `book_type` ADD FOREIGN KEY (`type_id`) REFERENCES `type` (`id`);
