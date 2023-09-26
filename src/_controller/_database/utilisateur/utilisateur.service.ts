@@ -10,4 +10,16 @@ export class UtilisateurService extends ModelService<Utilisateur> {
     ) {
         super(repository)
     }
+
+    findAll(): Promise<Utilisateur[]> {
+        return this.repository.find();
+      }
+    
+    //   findOne(id: number): Promise<Utilisateur | null> {
+    //     return this.repository.findOneBy({ id });
+    //   }
+    
+      async remove(id: number): Promise<void> {
+        await this.repository.delete(id);
+      }
 }

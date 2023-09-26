@@ -15,6 +15,6 @@ import { CryptoService } from 'src/_helper/_crypto.service'
         StorageService,
         CryptoService
     ],
-    exports: [UtilisateurService]
+    exports: [UtilisateurService, TypeOrmModule]
 })
 export class UtilisateurModule { }

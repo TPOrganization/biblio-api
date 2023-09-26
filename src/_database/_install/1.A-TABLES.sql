@@ -1,27 +1,27 @@
 CREATE TABLE `user` (
-  `id` integer PRIMARY KEY,
-  `last_name` varchar(255),
-  `first_name` varchar(255),
-  `email` varchar(255),
-  `password` varchar(255),
+  `id` integer PRIMARY KEY NOT NULL,
+  `last_name` varchar(255) NOT NULL,
+  `first_name` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
   `avatar` varchar(255)
 );
 
 CREATE TABLE `book` (
-  `id` integer PRIMARY KEY,
-  `user_id` integer,
-  `status_id` integer,
-  `author_id` integer,
-  `title` varchar(255),
+  `id` integer PRIMARY KEY NOT NULL,
+  `user_id` integer NOT NULL,
+  `status_id` integer NOT NULL,
+  `author_id` integer NOT NULL,
+  `title` varchar(255) NOT NULL,
   `comment` text,
   `start_date` date,
   `end_date` date,
-  `cover` varchar(255)
+  `cover` varchar(255) NOT NULL
 );
 
 CREATE TABLE `author` (
   `id` integer PRIMARY KEY,
-  `name` varchar(255)
+  `name` varchar(255) 
 );
 
 CREATE TABLE `type` (
