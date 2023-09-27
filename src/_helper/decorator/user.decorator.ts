@@ -1,6 +1,6 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common'
 
-// Sert à récupérer l'utilisateur connecté depuis les requêtes entrantes
+// Sert à récupérer l'User connecté depuis les requêtes entrantes
 export const User = createParamDecorator(
     (data: unknown, ctx: ExecutionContext) => {
         const request = ctx.switchToHttp().getRequest()

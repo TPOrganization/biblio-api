@@ -2,7 +2,7 @@
 
 ## Configuration de l'application environnement de dev
 - Créer une base de données POSTGRES / Mysql avec Docker
-- Si BDD mysql, n'oubliez pas de créer un utilisateur dédié et de lui attribuer tous les droit dessus, la connexion root sera refuser par TypeOrm
+- Si BDD mysql, n'oubliez pas de créer un User dédié et de lui attribuer tous les droit dessus, la connexion root sera refuser par TypeOrm
 - Version Node : v19.7.0
 - Créer un fichier .env à la racine de l'application comprenant les informations suivantes :
 
@@ -73,3 +73,5 @@
 - Puis à la fin du dev de la feature, faire une pull request de la branche vers develop
 
 /!\  npm run lint pour vérifier que le code est propre
+
+Faire les pull request vers develop
