@@ -1,42 +1,42 @@
 CREATE TABLE `user` (
-  `id` integer PRIMARY KEY NOT NULL,
-  `last_name` varchar(255) NOT NULL,
-  `first_name` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `last_name` varchar(255),
+  `first_name` varchar(255),
+  `email` varchar(255),
+  `password` varchar(255),
   `avatar` varchar(255)
 );
 
 CREATE TABLE `book` (
-  `id` integer PRIMARY KEY NOT NULL,
-  `user_id` integer NOT NULL,
-  `status_id` integer NOT NULL,
-  `author_id` integer NOT NULL,
-  `title` varchar(255) NOT NULL,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `user_id` integer,
+  `status_id` integer,
+  `author_id` integer,
+  `title` varchar(255),
   `comment` text,
   `start_date` date,
   `end_date` date,
-  `cover` varchar(255) NOT NULL
+  `cover` varchar(255)
 );
 
 CREATE TABLE `author` (
-  `id` integer PRIMARY KEY,
-  `name` varchar(255) 
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
+  `name` varchar(255)
 );
 
 CREATE TABLE `type` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `label` varchar(255)
 );
 
 CREATE TABLE `book_type` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `book_id` integer,
   `type_id` integer
 );
 
 CREATE TABLE `status` (
-  `id` integer PRIMARY KEY,
+  `id` integer PRIMARY KEY AUTO_INCREMENT,
   `label` varchar(255)
 );
 
