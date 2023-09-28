@@ -3,7 +3,7 @@ import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 @Entity()
 export class Book {
     @PrimaryGeneratedColumn()
-    Id: number
+    id: number
 
     @Column()
     userId : string
@@ -12,7 +12,7 @@ export class Book {
     statusId : string
 
     @Column()
-    author_id : string
+    authorId : string
 
     @Column()
     title : string
@@ -20,11 +20,11 @@ export class Book {
     @Column()
     comment : string
 
-    @Column()
-    start_date : string
+    @Column({ name : 'start_date' })
+    startDate : string
 
-    @Column()
-    end_date : string
+    @Column({ name : 'end_date' })
+    endDate : string
 
     @Column()
     cover : string
