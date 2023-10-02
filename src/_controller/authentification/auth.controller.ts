@@ -4,12 +4,19 @@ import { User } from '../_database/_entity/user/user.entity';
 
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService){}
+    constructor(private authService: AuthService) { }
 
     @HttpCode(HttpStatus.OK)
-        @Post('login')
-        singIn(@Body() user: User ){
-            return this.authService.signIn(user.email, user.password)
-        
+    @Post('signIn')
+    singIn(@Body() user: User) {
+        return this.authService.signIn(user.email, user.password)
+
     }
+
+    @Post('signUp')
+    singUp(@Body() user: User) {
+        return this.authService.signUp(user)
+    }
+
+
 }
