@@ -1,6 +1,6 @@
-import { Controller, Post, HttpCode, HttpStatus, Body } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { User } from '../_database/_entity/user/user.entity';
+import { Controller, Post, HttpCode, HttpStatus, Body } from '@nestjs/common'
+import { AuthService } from './auth.service'
+import { User } from '../_database/_entity/user/user.entity'
 
 @Controller('auth')
 export class AuthController {
@@ -17,6 +17,4 @@ export class AuthController {
     singUp(@Body() user: User) {
         return this.authService.signUp(user)
     }
-
-
 }

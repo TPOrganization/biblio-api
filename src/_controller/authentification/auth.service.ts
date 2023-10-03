@@ -32,6 +32,5 @@ export class AuthService {
             this._userService._repository.save(createNewUser)
             return 'Compte créé ! '
         }
-
     }
 }

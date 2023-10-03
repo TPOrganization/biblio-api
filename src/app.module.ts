@@ -14,10 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataSource } from 'typeorm'
 import { DataBaseConfiguration } from './_config/database.configuration'
 import { UserModule } from './_controller/_database/user/user.module'
-import { UserController } from './_controller/_database/user/user.controller'
 import { AuthModule } from './_controller/authentification/auth.module'
-import { AuthController } from './_controller/authentification/auth.controller'
-import { AuthService } from './_controller/authentification/auth.service'
 
 @Module({
     imports: [
