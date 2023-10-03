@@ -13,6 +13,7 @@ export class UserService extends ModelService<User> {
     }
 
     async findLogin(login: string): Promise<User | null> {
-        return await this.repository.findOneBy({email:login})
+        return await this.repository.findOneBy({ email: login })
     }
+
 }
