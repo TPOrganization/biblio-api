@@ -14,10 +14,10 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataSource } from 'typeorm'
 import { DataBaseConfiguration } from './_config/database.configuration'
 import { UserModule } from './_controller/_database/user/user.module'
-import { UserController } from './_controller/_database/user/user.controller'
 import { AuthModule } from './_controller/authentification/auth.module'
-import { AuthController } from './_controller/authentification/auth.controller'
-import { AuthService } from './_controller/authentification/auth.service'
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './_controller/authentification/auth.constants'
+
 
 @Module({
     imports: [
@@ -32,7 +32,12 @@ import { AuthService } from './_controller/authentification/auth.service'
             useClass: DataBaseConfiguration
         }),
         UserModule,
-        AuthModule
+        AuthModule,
+        JwtModule.register({
+            global: true,
+            secret: jwtConstants.secret,
+            signOptions: { expiresIn: '60s' },
+          }),
     ],
     controllers: [
         AppController,
