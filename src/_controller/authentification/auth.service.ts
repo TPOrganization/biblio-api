@@ -21,8 +21,7 @@ export class AuthService {
 
 
     async signUp(user: User): Promise<any> {
-        const isPasswordEmpty = user.password === ''
-        if (isPasswordEmpty) {
+        if (user.password === '') {
             throw new UnauthorizedException();
         } else {
             const hashPassword = await bcrypt.hash(user.password, 10)
