@@ -9,7 +9,6 @@ export class AuthService {
 
     async signIn(login: string, password: string): Promise<any> {
         const userLogin = await this._userService.findLogin(login)
-        console.log(userLogin)
         const isPasswordMatching = await bcrypt.compare(
             password,
             userLogin.password
@@ -22,12 +21,18 @@ export class AuthService {
 
 
     async signUp(user: User): Promise<any> {
-        const hashPassword = await bcrypt.hash(user.password, 10)
-        const createNewUser = this._userService._repository.create({
-            ...user,
-            password: hashPassword
-        })
-        this._userService._repository.save(createNewUser)
-        return 'Compte créé ! '
+        const isPasswordEmpty = user.password === ''
+        if (isPasswordEmpty) {
+            throw new UnauthorizedException();
+        } else {
+            const hashPassword = await bcrypt.hash(user.password, 10)
+            const createNewUser = this._userService._repository.create({
+                ...user,
+                password: hashPassword
+            })
+            this._userService._repository.save(createNewUser)
+            return 'Compte créé ! '
+        }
+
     }
 }
