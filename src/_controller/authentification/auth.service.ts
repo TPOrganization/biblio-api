@@ -1,11 +1,17 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UserService } from '../_database/user/user.service';
-import * as bcrypt from 'bcrypt';
 import { User } from '../_database/_entity/user/user.entity';
+import { ConfigService } from '@nestjs/config';
+import * as bcrypt from 'bcrypt';
+import { MailService } from 'src/_helper/mail/mail.service';
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly _userService: UserService) { }
+    constructor(
+        private readonly _userService: UserService,
+        private readonly _configService: ConfigService,
+        private readonly _mailService : MailService
+    ) { }
 
     async signIn(login: string, password: string): Promise<any> {
         const userLogin = await this._userService.findLogin(login)
@@ -32,5 +38,28 @@ export class AuthService {
             this._userService._repository.save(createNewUser)
             return 'Compte créé ! '
         }
+    }
+
+
+
+    //requete faite par le user pour récuper son mdp
+    async forgotPassword(user: User) {
+
+        //si le user n'existe pas alors err
+        if (!user) throw new Error("Email does not exist")
+
+        const token = 'prout'
+
+        //lien pour reset son mdp a mettre dans le mail de reset
+        const link = `${this._configService.get<string>('FRONT_URL')}/forgotPassword?token=${token}`;
+        
+        const sendMail = this._mailService.sendMail(user.email, "ResetPassword", link)
+        
+    }
+
+
+    async resetPassword(user: User) {
+  
+
     }
 }
