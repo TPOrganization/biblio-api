@@ -1,9 +1,9 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { UserService } from '../_database/user/user.service';
-import { User } from '../_database/_entity/user/user.entity';
-import { ConfigService } from '@nestjs/config';
-import * as bcrypt from 'bcrypt';
-import { MailService } from 'src/_helper/mail/mail.service';
+import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { UserService } from '../_database/user/user.service'
+import { User } from '../_database/_entity/user/user.entity'
+import { ConfigService } from '@nestjs/config'
+import * as bcrypt from 'bcrypt'
+import { MailService } from 'src/_helper/mail/mail.service'
 
 @Injectable()
 export class AuthService {
@@ -21,15 +21,15 @@ export class AuthService {
             userLogin.password
         )
         if (!userLogin || !isPasswordMatching) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException()
         }
-        return "Connecté"
+        return 'Connecté'
     }
 
 
     async signUp(user: User): Promise<any> {
         if (user.password === '') {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException()
         } else {
             const salt = await bcrypt.genSalt(10)
             const hashPassword = await bcrypt.hash(user.password, salt)
@@ -48,33 +48,33 @@ export class AuthService {
     async forgotPassword(user: User) {
 
         //si le user n'existe pas alors err
-        if (!user) throw new Error("Email does not exist")
+        if (!user) throw new Error('Email does not exist')
 
         const token = 'prout'
 
         //lien pour reset son mdp a mettre dans le mail de reset
-        const link = `${this._configService.get<string>('FRONT_URL')}/forgotPassword?token=${token}`;
+        //const link = `${this._configService.get<string>('FRONT_URL')}/forgotPassword?token=${token}`
     }
 
 
     async resetPassword(user: User, password: string, confirm: string) {
-        const token = "prout"
+        const token = 'prout'
         if (password === confirm) {
             const salt = await bcrypt.genSalt(10)
             const hashNewPassword = await bcrypt.hash(password, salt)
             const userExist = await this._userService.findOne(user.id)
             if (userExist) {
-                const save = await this._userService._repository.save({
+                await this._userService._repository.save({
                     ...user,
                     password: hashNewPassword
                 })
             }
             else {
-                throw new Error("L'utilisateur n'existe pas")
+                throw new Error('L\'utilisateur n\'existe pas')
             }
 
             //envoi mail pour confirmer la modification du mdp ?
-            const link = `${this._configService.get<string>('FRONT_URL')}/resetPassword?token=${token}`;
+            //const link = `${this._configService.get<string>('FRONT_URL')}/resetPassword?token=${token}`
 
         } else {
 
