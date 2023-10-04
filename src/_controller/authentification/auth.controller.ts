@@ -18,8 +18,8 @@ export class AuthController {
         return this.authService.signUp(user)
     }
 
-    @Post('resetPassword')
+    @Post('forgotPassword')
     resetPassword(@Body() user:User){
-        return this.authService.requestResetPassword(user)
+        return this.authService.forgotPassword(user)
     }
 }
