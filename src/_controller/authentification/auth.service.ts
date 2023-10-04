@@ -51,7 +51,7 @@ export class AuthService {
         const token = 'prout'
 
         //lien pour reset son mdp a mettre dans le mail de reset
-        const link = `${this._configService.get<string>('FRONT_URL')}/resetPassword?token=${token}`;
+        const link = `${this._configService.get<string>('FRONT_URL')}/forgotPassword?token=${token}`;
         
         const sendMail = this._mailService.sendMail(user.email, "ResetPassword", link)
         
