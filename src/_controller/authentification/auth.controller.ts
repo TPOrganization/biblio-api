@@ -19,7 +19,13 @@ export class AuthController {
     }
 
     @Post('forgotPassword')
+    forgotPassword(@Body() user:User){
+        return this.authService.forgotPassword(user)
+    }
+
+    @Post('resetPassword')
     resetPassword(@Body() user:User){
         return this.authService.forgotPassword(user)
     }
+
 }

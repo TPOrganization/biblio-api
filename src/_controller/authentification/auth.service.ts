@@ -58,11 +58,8 @@ export class AuthService {
     }
 
 
-    //fonction pour créé un nouveau mdp
-    // async resetPassword(user: User) {
-    //     //
+    async resetPassword(user: User) {
+  
 
-    //     //
-
-    // }
+    }
 }
