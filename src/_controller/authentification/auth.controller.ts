@@ -17,4 +17,9 @@ export class AuthController {
     singUp(@Body() user: User) {
         return this.authService.signUp(user)
     }
+
+    @Post('resetPassword')
+    resetPassword(@Body() user:User){
+        return this.authService.requestResetPassword(user)
+    }
 }
