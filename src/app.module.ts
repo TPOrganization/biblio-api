@@ -14,7 +14,9 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataBaseConfiguration } from './_config/database.configuration'
 import { UserModule } from './_controller/_database/user/user.module'
 import { AuthModule } from './_controller/authentification/auth.module'
-
+import { JwtModule } from '@nestjs/jwt';
+import { jwtConstants } from './_controller/authentification/auth.constants'
+import { PassportModule } from '@nestjs/passport/dist';
 
 @Module({
     imports: [
@@ -30,6 +32,12 @@ import { AuthModule } from './_controller/authentification/auth.module'
         }),
         UserModule,
         AuthModule,
+        JwtModule.register({
+            global: true,
+            secret: jwtConstants.secret,
+            signOptions: { expiresIn: '60s' },
+          }),
+          PassportModule.register({defaultStrategy:'jwt'}),
     ],
     controllers: [
         AppController,

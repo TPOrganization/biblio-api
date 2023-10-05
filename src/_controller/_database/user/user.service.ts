@@ -11,7 +11,7 @@ export class UserService extends ModelService<User> {
     ) {
         super(repository)
     }
-
+    
     async findLogin(login: string): Promise<User | null> {
         return await this.repository.findOneBy({ email: login })
     }

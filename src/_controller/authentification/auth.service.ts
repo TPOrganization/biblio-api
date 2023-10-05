@@ -4,18 +4,20 @@ import { User } from '../_database/_entity/user/user.entity'
 import { ConfigService } from '@nestjs/config'
 import * as bcrypt from 'bcrypt'
 import { MailService } from 'src/_helper/mail/mail.service'
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly _userService: UserService,
+        private readonly _jwtService: JwtService,
         private readonly _configService: ConfigService,
         private readonly _mailService: MailService
     ) { }
 
-    async signIn(login: string, password: string): Promise<any> {
-        const userLogin = await this._userService.findLogin(login)
-        console.log(userLogin)
+    async validateUser(login: string, password: string): Promise<any> {
+        const userLogin = await await this._userService.findLogin(login)
+        console.log("validateUser, userLogin", userLogin)
         const isPasswordMatching = await bcrypt.compare(
             password,
             userLogin.password
@@ -23,7 +25,23 @@ export class AuthService {
         if (!userLogin || !isPasswordMatching) {
             throw new UnauthorizedException()
         }
-        return 'Connecté'
+        return userLogin
+    }
+
+
+    async signIn(login: string, password: string): Promise<any> {
+        const userLogin = await this._userService.findLogin(login)
+        const isPasswordMatching = await bcrypt.compare(
+            password,
+            userLogin.password
+        )
+        if (!userLogin || !isPasswordMatching) {
+            throw new UnauthorizedException()
+        }
+        delete userLogin.password
+        return {
+            token: this._jwtService.sign({...userLogin}), //manque un id ? 
+        }
     }
 
 
