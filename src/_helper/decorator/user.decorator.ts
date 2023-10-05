@@ -5,8 +5,7 @@ export const CurrentUser = createParamDecorator(
     (data: unknown, ctx: ExecutionContext) => {
         const request = ctx.switchToHttp().getRequest()
         const user = {
-            user: request.user['user'] ? { ...request.user['user'] } : request.user,
-            maintenance: global.maintenance ?? false
+            user: request.user['user'] ? { ...request.user['user'] } : request.user
         }
         return user
     },

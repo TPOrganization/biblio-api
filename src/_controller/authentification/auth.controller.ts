@@ -10,9 +10,13 @@ import { User } from '../_database/_entity/user/user.entity';
 export class AuthController {
     constructor(private authService: AuthService) { }
 
-    @UseGuards(LocalAuthGuard)
+    @HttpCode(HttpStatus.OK)
+
     @Post('sign-in')
-    singIn(@CurrentUser() { user }: { user: User }) {
+    @UseGuards(LocalAuthGuard)
+    singIn(
+        @CurrentUser() { user }: { user: User }
+    ) {
         return this.authService.signIn(user)
     }
 
@@ -28,7 +32,10 @@ export class AuthController {
 
     @UseGuards(JwtAuthGuard)
     @Post('reset-password')
-    resetPassword(@Body() @Body() { user, password, confirm }: { user: User, password: string, confirm: string }) {
+    resetPassword(
+        @CurrentUser() { user }: { user: User },
+        @Body() { password, confirm }: { password: string, confirm: string }
+    ) {
         return this.authService.resetPassword(user, password, confirm)
     }
 }
