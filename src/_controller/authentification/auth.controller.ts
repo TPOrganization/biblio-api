@@ -11,10 +11,12 @@ export class AuthController {
     constructor(private authService: AuthService) { }
 
     @HttpCode(HttpStatus.OK)
-    
+
     @Post('sign-in')
     @UseGuards(LocalAuthGuard)
-    singIn(@CurrentUser() { user }: { user: User }) {
+    singIn(
+        @CurrentUser() { user }: { user: User }
+    ) {
         return this.authService.signIn(user)
     }
 
@@ -25,13 +27,16 @@ export class AuthController {
     }
 
     @Post('forgot-password')
-    forgotPassword(@Body() user:User){
+    forgotPassword(@Body() user: User) {
         return this.authService.forgotPassword(user)
     }
 
     @UseGuards(JwtAuthGuard)
     @Post('reset-password')
-    resetPassword(@Body() @Body() { user, password, confirm } : { user: User, password: string, confirm:string}){
+    resetPassword(
+        @CurrentUser() { user }: { user: User },
+        @Body() { password, confirm }: { password: string, confirm: string }
+    ) {
         return this.authService.resetPassword(user, password, confirm)
     }
 }
