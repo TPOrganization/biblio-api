@@ -10,28 +10,25 @@ import { User } from '../_database/_entity/user/user.entity';
 export class AuthController {
     constructor(private authService: AuthService) { }
 
-    @HttpCode(HttpStatus.OK)
-    
-    @Post('sign-in')
     @UseGuards(LocalAuthGuard)
+    @Post('sign-in')
     singIn(@CurrentUser() { user }: { user: User }) {
         return this.authService.signIn(user)
     }
 
     @Post('sign-up')
-    @UseGuards(JwtAuthGuard)
     singUp(@Body() user: User) {
         return this.authService.signUp(user)
     }
 
     @Post('forgot-password')
-    forgotPassword(@Body() user:User){
-        return this.authService.forgotPassword(user)
+    forgotPassword(@Body() { email }: { email: string }) {
+        return this.authService.forgotPassword(email)
     }
 
     @UseGuards(JwtAuthGuard)
     @Post('reset-password')
-    resetPassword(@Body() @Body() { user, password, confirm } : { user: User, password: string, confirm:string}){
+    resetPassword(@Body() @Body() { user, password, confirm }: { user: User, password: string, confirm: string }) {
         return this.authService.resetPassword(user, password, confirm)
     }
 }

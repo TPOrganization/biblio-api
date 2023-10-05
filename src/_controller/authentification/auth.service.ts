@@ -58,15 +58,14 @@ export class AuthService {
 
 
     //requete faite par le user pour récuper son mdp
-    async forgotPassword(user: User) {
-
-        //si le user n'existe pas alors err
+    async forgotPassword(email: string) {
+        // Todo : Récupérer le user par son email 
         if (!user) throw new Error('Email does not exist')
 
-        const token = 'prout'
-
-        //lien pour reset son mdp a mettre dans le mail de reset
-        //const link = `${this._configService.get<string>('FRONT_URL')}/forgotPassword?token=${token}`
+        const token = await this._jwtService.sign({ user: user })
+        const frontUrl = this._configService.get<string>('FRONT_URL')
+        const link = `${this._configService.get<string>('FRONT_URL')}/reset-password?token=${token}`;
+        const sendMail = this._mailService.sendMail(user.email, "ResetPassword", link)
     }
 
 
@@ -90,7 +89,6 @@ export class AuthService {
             //const link = `${this._configService.get<string>('FRONT_URL')}/resetPassword?token=${token}`
 
         } else {
-
             throw new Error('Les mots de passe ne sont pas identiques')
         }
     }
