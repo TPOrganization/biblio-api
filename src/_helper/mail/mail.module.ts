@@ -2,7 +2,7 @@ import { Global, Module } from '@nestjs/common'
 import { MailService } from './mail.service'
 import { HttpModule } from '@nestjs/axios'
 import { MailerModule } from '@nestjs-modules/mailer'
-import { ConfigModule, ConfigService } from '@nestjs/config'
+import { ConfigService } from '@nestjs/config'
 
 @Global()
 @Module({

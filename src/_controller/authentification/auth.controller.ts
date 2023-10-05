@@ -7,25 +7,24 @@ export class AuthController {
     constructor(private authService: AuthService) { }
 
     @HttpCode(HttpStatus.OK)
-    @Post('signIn')
+    @Post('sign-in')
     singIn(@Body() user: User) {
         return this.authService.signIn(user.email, user.password)
-
     }
 
-    @Post('signUp')
+    @Post('sign-up')
     singUp(@Body() user: User) {
         return this.authService.signUp(user)
     }
 
-    @Post('forgotPassword')
+    @Post('forgot-password')
     forgotPassword(@Body() user:User){
         return this.authService.forgotPassword(user)
     }
 
-    @Post('resetPassword')
-    resetPassword(@Body() user:User){
-        return this.authService.forgotPassword(user)
+    @Post('reset-password')
+    resetPassword(@Body() @Body() { user, password, confirm } : { user: User, password: string, confirm:string}){
+        return this.authService.resetPassword(user, password, confirm)
     }
 
 }
