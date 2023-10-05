@@ -16,34 +16,29 @@ export class AuthService {
     ) { }
 
     async validateUser(login: string, password: string): Promise<any> {
+        if (login.trim() === '' || password.trim() === '') {
+            throw new UnauthorizedException()
+        }
+
         const userLogin = await await this._userService.findLogin(login)
-        console.log("validateUser, userLogin", userLogin)
         const isPasswordMatching = await bcrypt.compare(
             password,
             userLogin.password
         )
+        
         if (!userLogin || !isPasswordMatching) {
             throw new UnauthorizedException()
         }
+
         return userLogin
     }
 
-
-    async signIn(login: string, password: string): Promise<any> {
-        const userLogin = await this._userService.findLogin(login)
-        const isPasswordMatching = await bcrypt.compare(
-            password,
-            userLogin.password
-        )
-        if (!userLogin || !isPasswordMatching) {
-            throw new UnauthorizedException()
-        }
-        delete userLogin.password
+    async signIn(user: User) {
         return {
-            token: this._jwtService.sign({...userLogin}), //manque un id ? 
+            token: this._jwtService.sign({ user: user }),
+            user: user
         }
     }
-
 
     async signUp(user: User): Promise<any> {
         if (user.password === '') {
