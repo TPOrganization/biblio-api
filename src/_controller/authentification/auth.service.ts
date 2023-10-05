@@ -59,18 +59,16 @@ export class AuthService {
 
     //requete faite par le user pour récuper son mdp
     async forgotPassword(email: string) {
-        // Todo : Récupérer le user par son email 
+        const user = await this._userService.findLogin(email)
         if (!user) throw new Error('Email does not exist')
 
         const token = await this._jwtService.sign({ user: user })
-        const frontUrl = this._configService.get<string>('FRONT_URL')
         const link = `${this._configService.get<string>('FRONT_URL')}/reset-password?token=${token}`;
         const sendMail = this._mailService.sendMail(user.email, "ResetPassword", link)
     }
 
 
     async resetPassword(user: User, password: string, confirm: string) {
-        const token = 'prout'
         if (password === confirm) {
             const salt = await bcrypt.genSalt(10)
             const hashNewPassword = await bcrypt.hash(password, salt)

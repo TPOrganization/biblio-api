@@ -32,12 +32,6 @@ import { PassportModule } from '@nestjs/passport/dist';
         }),
         UserModule,
         AuthModule,
-        JwtModule.register({
-            global: true,
-            secret: jwtConstants.secret,
-            signOptions: { expiresIn: '60s' },
-          }),
-          PassportModule.register({defaultStrategy:'jwt'}),
     ],
     controllers: [
         AppController,

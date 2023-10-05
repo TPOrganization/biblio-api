@@ -1,6 +1,5 @@
 import { Controller, Post, HttpCode, HttpStatus, Body, UseGuards } from '@nestjs/common'
 import { AuthService } from './auth.service'
-import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { CurrentUser } from 'src/_helper/decorator/user.decorator';
@@ -30,8 +29,8 @@ export class AuthController {
         return this.authService.forgotPassword(email)
     }
 
-    @UseGuards(JwtAuthGuard)
     @Post('reset-password')
+    @UseGuards(JwtAuthGuard)
     resetPassword(
         @CurrentUser() { user }: { user: User },
         @Body() { password, confirm }: { password: string, confirm: string }
