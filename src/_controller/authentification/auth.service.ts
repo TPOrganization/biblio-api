@@ -16,16 +16,16 @@ export class AuthService {
     ) { }
 
     async validateUser(login: string, password: string): Promise<any> {
-        if (login.trim() === '' || password.trim() === '') {
+        if (login.trim().length === 0 || password.trim().length === 0) {
             throw new UnauthorizedException()
         }
 
-        const userLogin = await await this._userService.findLogin(login)
+        const userLogin = await this._userService.findLogin(login)
         const isPasswordMatching = await bcrypt.compare(
             password,
             userLogin.password
         )
-        
+
         if (!userLogin || !isPasswordMatching) {
             throw new UnauthorizedException()
         }
@@ -43,16 +43,16 @@ export class AuthService {
     async signUp(user: User): Promise<any> {
         if (user.password === '') {
             throw new UnauthorizedException()
-        } else {
-            const salt = await bcrypt.genSalt(10)
-            const hashPassword = await bcrypt.hash(user.password, salt)
-            const createNewUser = this._userService._repository.create({
-                ...user,
-                password: hashPassword
-            })
-            this._userService._repository.save(createNewUser)
-            return 'Compte créé ! '
         }
+        const salt = await bcrypt.genSalt(10)
+        const hashPassword = await bcrypt.hash(user.password, salt)
+        const createNewUser = this._userService._repository.create({
+            ...user,
+            password: hashPassword
+        })
+        this._userService._repository.save(createNewUser)
+        return 'Compte créé ! '
+
     }
 
 
@@ -60,7 +60,7 @@ export class AuthService {
     //requete faite par le user pour récuper son mdp
     async forgotPassword(email: string) {
         const user = await this._userService.findLogin(email)
-        if (!user) throw new Error('Email does not exist')
+        if (!user) throw new Error
 
         const token = await this._jwtService.sign({ user: user })
         const link = `${this._configService.get<string>('FRONT_URL')}/reset-password?token=${token}`;
@@ -80,7 +80,7 @@ export class AuthService {
                 })
             }
             else {
-                throw new Error('L\'utilisateur n\'existe pas')
+                throw new Error
             }
 
             //envoi mail pour confirmer la modification du mdp ?
