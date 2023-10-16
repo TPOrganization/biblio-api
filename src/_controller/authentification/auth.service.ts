@@ -5,6 +5,15 @@ import { ConfigService } from '@nestjs/config'
 import * as bcrypt from 'bcrypt'
 import { MailService } from 'src/_helper/mail/mail.service'
 
+
+export interface SignUpData {
+    lastName: string,
+    firstName: string,
+    email: string,
+    password: string,
+    passwordConfirm: string
+}
+
 @Injectable()
 export class AuthService {
     constructor(
@@ -27,7 +36,7 @@ export class AuthService {
     }
 
 
-    async signUp(user: User): Promise<any> {
+    async signUp(user: SignUpData): Promise<any> {
         if (user.password === '') {
             throw new UnauthorizedException()
         } else {
@@ -43,15 +52,10 @@ export class AuthService {
     }
 
 
-
-    //requete faite par le user pour récuper son mdp
     async forgotPassword(user: User) {
-
-        //si le user n'existe pas alors err
         if (!user) throw new Error('Email does not exist')
 
         const token = 'prout'
-
         //lien pour reset son mdp a mettre dans le mail de reset
         //const link = `${this._configService.get<string>('FRONT_URL')}/forgotPassword?token=${token}`
     }
