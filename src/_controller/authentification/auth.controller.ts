@@ -8,23 +8,22 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('sign-in')
-    singIn(@Body() data: User) {
-        return this.authService.signIn(data.email, data.password)
+    singIn(@Body() { login, password }: { login: string, password: string }) {
+        return this.authService.signIn(login, password)
     }
 
     @Post('sign-up')
     singUp(@Body() data: SignUpData) {
-        console.log(data)
         return this.authService.signUp(data)
     }
 
     @Post('forgot-password')
-    forgotPassword(@Body() data:User){
-        return this.authService.forgotPassword(data)
+    forgotPassword(@Body() { email }: { email: string }) {
+        return this.authService.forgotPassword(email)
     }
 
     @Post('reset-password')
-    resetPassword(@Body() @Body() { data, password, confirm } : { data: User, password: string, confirm:string}){
+    resetPassword(@Body() { data, password, confirm }: { data: User, password: string, confirm: string }) {
         return this.authService.resetPassword(data, password, confirm)
     }
 

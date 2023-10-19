@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common'
-import { ConfigModule } from '@nestjs/config'
+import { ConfigModule, ConfigService } from '@nestjs/config'
 import { ScheduleModule } from '@nestjs/schedule'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
@@ -14,7 +14,6 @@ import { TypeOrmModule } from '@nestjs/typeorm'
 import { DataBaseConfiguration } from './_config/database.configuration'
 import { UserModule } from './_controller/_database/user/user.module'
 import { AuthModule } from './_controller/authentification/auth.module'
-
 
 @Module({
     imports: [
