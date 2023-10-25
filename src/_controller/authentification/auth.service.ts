@@ -39,11 +39,7 @@ export class AuthService {
             throw new UnauthorizedException()
         }
 
-        delete user.password
-        return {
-            accessToken: await this._jwtService.sign({ ...user }),
-            user
-        }
+        return user
     }
 
     async signIn(user: User) {
