@@ -1,6 +1,9 @@
-import { Controller, Post, HttpCode, HttpStatus, Body } from '@nestjs/common'
-import { AuthService, SignUpData } from './auth.service'
-import { User } from '../_database/_entity/user/user.entity'
+import { Controller, Post, HttpCode, HttpStatus, Body, UseGuards } from '@nestjs/common'
+import { AuthService } from './auth.service'
+import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { LocalAuthGuard } from './guards/local-auth.guard';
+import { CurrentUser } from 'src/_helper/decorator/user.decorator';
+import { User } from '../_database/_entity/user/user.entity';
 
 @Controller('auth')
 export class AuthController {
@@ -8,6 +11,7 @@ export class AuthController {
 
     @HttpCode(HttpStatus.OK)
     @Post('sign-in')
+    @UseGuards(LocalAuthGuard)
     singIn(@Body() { login, password }: { login: string, password: string }) {
         return this.authService.signIn(login, password)
     }
@@ -23,8 +27,11 @@ export class AuthController {
     }
 
     @Post('reset-password')
-    resetPassword(@Body() { data, password, confirm }: { data: User, password: string, confirm: string }) {
-        return this.authService.resetPassword(data, password, confirm)
+    @UseGuards(JwtAuthGuard)
+    resetPassword(
+        @CurrentUser() { user }: { user: User },
+        @Body() { password, confirm }: { password: string, confirm: string }
+    ) {
+        return this.authService.resetPassword(user, password, confirm)
     }
-
 }

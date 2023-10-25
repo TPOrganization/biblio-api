@@ -6,7 +6,6 @@ import { MailService } from 'src/_helper/mail/mail.service'
 import { JwtService } from '@nestjs/jwt'
 import * as bcrypt from 'bcrypt'
 
-
 export interface SignUpData {
     lastName: string,
     firstName: string,
@@ -24,7 +23,7 @@ export class AuthService {
         private readonly _mailService: MailService
     ) { }
 
-    async signIn(login: string, password: string): Promise<any> {
+    async validateUser(login: string, password: string): Promise<any> {
         if (!login) {
             throw new UnauthorizedException()
         }
@@ -47,6 +46,12 @@ export class AuthService {
         }
     }
 
+    async signIn(user: User) {
+        return {
+            token: this._jwtService.sign({ user: user }),
+            user: user
+        }
+    }
 
     async signUp(user: SignUpData): Promise<User> {
 
@@ -68,7 +73,6 @@ export class AuthService {
         const result = await this._userService._repository.save(createNewUser)
         delete result.password
         return result
-
     }
 
 
@@ -87,7 +91,6 @@ export class AuthService {
         return await this._mailService.sendMail(user.email, 'reset mdp', link)
     }
 
-
     async resetPassword(user: User, password: string, confirm: string) {
         if (password === confirm) {
             const salt = await bcrypt.genSalt(10)
@@ -101,12 +104,11 @@ export class AuthService {
                 return true
             }
             else {
-                throw new Error('L\'utilisateur n\'existe pas')
+                throw new Error
             }
 
         } else {
             throw new Error('Les mots de passe ne sont pas identiques')
         }
     }
-
 }
