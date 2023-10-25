@@ -10,18 +10,15 @@ export class AuthController {
     constructor(private authService: AuthService) { }
 
     @HttpCode(HttpStatus.OK)
-
     @Post('sign-in')
     @UseGuards(LocalAuthGuard)
-    singIn(
-        @CurrentUser() { user }: { user: User }
-    ) {
-        return this.authService.signIn(user)
+    singIn(@Body() { login, password }: { login: string, password: string }) {
+        return this.authService.signIn(login, password)
     }
 
     @Post('sign-up')
-    singUp(@Body() user: User) {
-        return this.authService.signUp(user)
+    singUp(@Body() data: SignUpData) {
+        return this.authService.signUp(data)
     }
 
     @Post('forgot-password')

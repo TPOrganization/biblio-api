@@ -1,10 +1,18 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common'
 import { UserService } from '../_database/user/user.service'
 import { User } from '../_database/_entity/user/user.entity'
 import { ConfigService } from '@nestjs/config'
-import * as bcrypt from 'bcrypt'
 import { MailService } from 'src/_helper/mail/mail.service'
-import { JwtService } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt'
+import * as bcrypt from 'bcrypt'
+
+export interface SignUpData {
+    lastName: string,
+    firstName: string,
+    email: string,
+    password: string,
+    passwordConfirm: string
+}
 
 @Injectable()
 export class AuthService {
@@ -16,21 +24,26 @@ export class AuthService {
     ) { }
 
     async validateUser(login: string, password: string): Promise<any> {
-        if (login.trim().length === 0 || password.trim().length === 0) {
+        if (!login) {
             throw new UnauthorizedException()
         }
-
-        const userLogin = await this._userService.findLogin(login)
+        const user = await this._userService.findLogin(login)
+        if (!user || !password) {
+            throw new UnauthorizedException()
+        }
         const isPasswordMatching = await bcrypt.compare(
             password,
-            userLogin.password
+            user.password
         )
-
-        if (!userLogin || !isPasswordMatching) {
+        if (!isPasswordMatching) {
             throw new UnauthorizedException()
         }
 
-        return userLogin
+        delete user.password
+        return {
+            accessToken: await this._jwtService.sign({ ...user }),
+            user
+        }
     }
 
     async signIn(user: User) {
@@ -40,33 +53,43 @@ export class AuthService {
         }
     }
 
-    async signUp(user: User): Promise<any> {
+    async signUp(user: SignUpData): Promise<User> {
+
         if (user.password === '') {
-            throw new UnauthorizedException()
+            throw new ForbiddenException()
         }
+
+        const userLogin = await this._userService.findLogin(user.email)
+        if (userLogin) {
+            throw new ForbiddenException()
+        }
+
         const salt = await bcrypt.genSalt(10)
         const hashPassword = await bcrypt.hash(user.password, salt)
         const createNewUser = this._userService._repository.create({
             ...user,
             password: hashPassword
         })
-        this._userService._repository.save(createNewUser)
-        return 'Compte créé ! '
-
+        const result = await this._userService._repository.save(createNewUser)
+        delete result.password
+        return result
     }
 
 
-
-    //requete faite par le user pour récuper son mdp
-    async forgotPassword(email: string) {
+    async forgotPassword(email: string): Promise<boolean> {
+        if (!email) {
+            throw new UnauthorizedException()
+        }
         const user = await this._userService.findLogin(email)
-        if (!user) throw new Error
+        if (!user) {
+            throw new UnauthorizedException()
+        }
 
-        const token = await this._jwtService.sign({ user: user })
-        const link = `${this._configService.get<string>('FRONT_URL')}/reset-password?token=${token}`;
-        const sendMail = this._mailService.sendMail(user.email, "ResetPassword", link)
+        delete user.password
+        const token = await this._jwtService.sign({ ...user })
+        const link = `${this._configService.get<string>('FRONT_URL')}/reset-password?token=${token}`
+        return await this._mailService.sendMail(user.email, 'reset mdp', link)
     }
-
 
     async resetPassword(user: User, password: string, confirm: string) {
         if (password === confirm) {
@@ -78,17 +101,14 @@ export class AuthService {
                     ...user,
                     password: hashNewPassword
                 })
+                return true
             }
             else {
                 throw new Error
             }
 
-            //envoi mail pour confirmer la modification du mdp ?
-            //const link = `${this._configService.get<string>('FRONT_URL')}/resetPassword?token=${token}`
-
         } else {
             throw new Error('Les mots de passe ne sont pas identiques')
         }
     }
-
 }
