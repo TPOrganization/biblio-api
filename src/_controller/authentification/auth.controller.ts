@@ -1,4 +1,4 @@
-import { Controller, Post, Body, UseGuards } from '@nestjs/common'
+import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common'
 import { AuthService, SignUpData } from './auth.service'
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
@@ -14,6 +14,13 @@ export class AuthController {
     singIn(@CurrentUser() { user }: { user: User }) {
         return this.authService.signIn(user)
     }
+
+    @UseGuards(JwtAuthGuard)
+    @Get('/user')
+    user(@CurrentUser() user: { user: User }) {
+        return user
+    }
+
 
     @Post('sign-up')
     singUp(@Body() data: SignUpData) {
