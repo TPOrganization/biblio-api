@@ -16,7 +16,7 @@ CREATE TABLE `book` (
   `comment` text,
   `start_date` date,
   `end_date` date,
-  `cover` varchar(255)
+  `isbn` varchar(255)
 );
 
 CREATE TABLE `author` (

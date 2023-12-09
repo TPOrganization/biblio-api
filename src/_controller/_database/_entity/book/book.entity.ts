@@ -30,7 +30,7 @@ export class Book {
     endDate: string
 
     @Column()
-    cover: string
+    isbn: string
 
 
     @ManyToOne(() => Status, (e) => e.books)
