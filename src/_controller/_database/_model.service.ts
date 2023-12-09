@@ -1,9 +1,42 @@
-import { Repository } from 'typeorm'
+import { FindOptionsWhere, Repository } from 'typeorm'
+import { Injectable } from '@nestjs/common'
 
+@Injectable()
 export class ModelService<T>{
+
+    public primaryKey: string = 'id'
+
     constructor(
         public readonly _repository: Repository<T>
     ) { }
 
-    // TODO Function générique ici
+    async create(entity: T): Promise<T> {
+        const result = await this._repository.save(entity)
+        return result ? await this.findOne(result[this.primaryKey]) : null
+    }
+
+    async find(): Promise<T[]> {
+        return await this._repository.find()
+    }
+
+    async findOne(id: number): Promise<T> {
+        const whereObject: FindOptionsWhere<T> = {}
+        whereObject[this.primaryKey] = id
+        return await this._repository.findOne({ where: whereObject })
+    }
+
+    async update(id: number, entity: T) {
+        const whereObject: FindOptionsWhere<T> = {}
+        whereObject[this.primaryKey] = id
+        const toUpdate = await this._repository.findOne({ where: whereObject })
+        delete entity[this.primaryKey]
+        const updated = Object.assign(toUpdate, entity)
+
+        return await this._repository.save(updated)
+    }
+
+    async delete(id: number): Promise<boolean> {
+        const deleteResult = await this._repository.delete(id)
+        return deleteResult.affected === 1
+    }
 }
