@@ -11,5 +11,5 @@ export class UserController extends ModelController<User> {
     ) {
         super(service)
     }
-    
+
 }

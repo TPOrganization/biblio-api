@@ -50,7 +50,6 @@ export class AuthService {
     }
 
     async signUp(user: SignUpData): Promise<User> {
-
         if (user.password === '') {
             throw new ForbiddenException()
         }

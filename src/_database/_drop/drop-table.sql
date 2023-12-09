@@ -1,5 +1,5 @@
 DROP TABLE IF EXISTS `book_type`;
-DROP TABLE IF EXISTS `type`;
+DROP TABLE IF EXISTS `types_of_books`;
 DROP TABLE IF EXISTS `book`;
 DROP TABLE IF EXISTS `author`;
 DROP TABLE IF EXISTS `status`;

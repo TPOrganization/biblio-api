@@ -1,9 +1,9 @@
 import { Controller, Post, Body, UseGuards, Get } from '@nestjs/common'
 import { AuthService, SignUpData } from './auth.service'
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { LocalAuthGuard } from './guards/local-auth.guard';
-import { CurrentUser } from 'src/_helper/decorator/user.decorator';
-import { User } from '../_database/_entity/user/user.entity';
+import { JwtAuthGuard } from './guards/jwt-auth.guard'
+import { LocalAuthGuard } from './guards/local-auth.guard'
+import { CurrentUser } from 'src/_helper/decorator/user.decorator'
+import { User } from '../_database/_entity/user/user.entity'
 
 @Controller('auth')
 export class AuthController {
@@ -11,16 +11,15 @@ export class AuthController {
 
     @Post('sign-in')
     @UseGuards(LocalAuthGuard)
-    singIn(@CurrentUser() { user }: { user: User }) {
+    singIn(@CurrentUser() user: User) {
         return this.authService.signIn(user)
     }
 
     @UseGuards(JwtAuthGuard)
     @Get('/user')
-    user(@CurrentUser() user: { user: User }) {
+    user(@CurrentUser() user: User) {
         return user
     }
-
 
     @Post('sign-up')
     singUp(@Body() data: SignUpData) {

@@ -6,9 +6,8 @@ export class BookType {
     id: number
 
     @Column()
-    bookId : string
+    bookId: string
 
     @Column()
-    typeId : string
-
+    typeId: string
 }

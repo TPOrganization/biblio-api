@@ -1,8 +1,10 @@
 /* eslint-disable */
-import { Controller, Get, Param, Post, Body, Patch, Delete } from '@nestjs/common'
+import { Controller, Get, Param, Post, Body, Patch, Delete, UseGuards } from '@nestjs/common'
 import { ModelService } from './_model.service'
+import { JwtAuthGuard } from '../authentification/guards/jwt-auth.guard'
 
 @Controller()
+@UseGuards(JwtAuthGuard)
 export class ModelController<T>{
     constructor(
         public service: ModelService<T>
@@ -32,6 +34,4 @@ export class ModelController<T>{
     async delete(@Param('id') id: string) {
         return await this.service.delete(+id)
     }
-
-
 }

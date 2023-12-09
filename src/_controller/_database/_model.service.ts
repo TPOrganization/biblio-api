@@ -10,8 +10,9 @@ export class ModelService<T>{
         public readonly _repository: Repository<T>
     ) { }
 
-    async create(entity: T): Promise<T>{
-        return await this._repository.save(entity)
+    async create(entity: T): Promise<T> {
+        const result = await this._repository.save(entity)
+        return result ? await this.findOne(result[this.primaryKey]) : null
     }
 
     async find(): Promise<T[]> {
@@ -23,20 +24,19 @@ export class ModelService<T>{
         whereObject[this.primaryKey] = id
         return await this._repository.findOne({ where: whereObject })
     }
- 
-    async update(id: number, entity:T){
+
+    async update(id: number, entity: T) {
         const whereObject: FindOptionsWhere<T> = {}
         whereObject[this.primaryKey] = id
         const toUpdate = await this._repository.findOne({ where: whereObject })
+        delete entity[this.primaryKey]
         const updated = Object.assign(toUpdate, entity)
 
         return await this._repository.save(updated)
     }
 
-    async delete(id: number): Promise<boolean>{
+    async delete(id: number): Promise<boolean> {
         const deleteResult = await this._repository.delete(id)
         return deleteResult.affected === 1
     }
-
-
 }
