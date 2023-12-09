@@ -6,9 +6,7 @@ import * as path from 'path'
 @Controller(__dirname.split(path.sep).pop())
 export class MediaController {
     constructor(
-        private readonly storageService: StorageService,
-        private readonly configService: ConfigService
+        private readonly _storageService: StorageService,
+        private readonly _configService: ConfigService
     ) { }
-
-    // Todo route pour gestion media (upload / download / route image)
 }

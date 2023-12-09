@@ -3,7 +3,6 @@ import { Status } from '../_entity/status/status.entity'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
-
 export class StatusService extends ModelService<Status> {
     constructor(
         @InjectRepository(Status)
@@ -11,5 +10,4 @@ export class StatusService extends ModelService<Status> {
     ) {
         super(repository)
     }
-
 }

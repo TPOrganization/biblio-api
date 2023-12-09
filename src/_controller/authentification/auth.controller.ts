@@ -7,12 +7,14 @@ import { User } from '../_database/_entity/user/user.entity'
 
 @Controller('auth')
 export class AuthController {
-    constructor(private authService: AuthService) { }
+    constructor(
+        private readonly _authService: AuthService
+    ) { }
 
     @Post('sign-in')
     @UseGuards(LocalAuthGuard)
     singIn(@CurrentUser() user: User) {
-        return this.authService.signIn(user)
+        return this._authService.signIn(user)
     }
 
     @UseGuards(JwtAuthGuard)
@@ -23,12 +25,12 @@ export class AuthController {
 
     @Post('sign-up')
     singUp(@Body() data: SignUpData) {
-        return this.authService.signUp(data)
+        return this._authService.signUp(data)
     }
 
     @Post('forgot-password')
     forgotPassword(@Body() { email }: { email: string }) {
-        return this.authService.forgotPassword(email)
+        return this._authService.forgotPassword(email)
     }
 
     @Post('reset-password')
@@ -37,6 +39,6 @@ export class AuthController {
         @CurrentUser() { user }: { user: User },
         @Body() { password, confirm }: { password: string, confirm: string }
     ) {
-        return this.authService.resetPassword(user, password, confirm)
+        return this._authService.resetPassword(user, password, confirm)
     }
 }

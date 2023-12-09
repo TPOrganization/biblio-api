@@ -3,7 +3,6 @@ import { ModelService } from 'src/_controller/_database/_model.service'
 import { Repository } from 'typeorm'
 import { Book } from '../_entity/book/book.entity'
 
-
 export class BookService extends ModelService<Book> {
     constructor(
         @InjectRepository(Book)
