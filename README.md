@@ -24,12 +24,12 @@
         FORCE_INSTALL_SCHEMA=false
 
         # JWT
-        JWT_SECRET=£54654AZDA213QS1D3oIO
+        JWT_SECRET=£
         JWT_EXPIRE_SECONDS=86400
 
         # ENCRYPTION
         ENCRYPTION_ALGORITHM=aes-256-cbc
-        ENCRYPTION_SECRET=0GBAY6H5M9UIbbGO6ryh1JldOdCl4gH5
+        ENCRYPTION_SECRET=
 
         # STORAGE
         UPLOAD_PATH=./data/upload
@@ -44,8 +44,8 @@
         # EMAIL - MAILJET
         MAILJET_HOST=in-v3.mailjet.com
         MAILJET_PORT=587
-        MAILJET_USER=538fb464f27239082efd8ea3499ca59d
-        MAILJET_PASSWORD=f4084498b476efbabd92db9157268f90
+        MAILJET_USER=
+        MAILJET_PASSWORD=
 
 ## Installer / Lancer l'application sur environnement de dev
 
